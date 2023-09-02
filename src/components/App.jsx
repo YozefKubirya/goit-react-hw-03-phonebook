@@ -13,18 +13,18 @@ export class App extends  Component  {
     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},],
   filter: ''
   }
-  componentDidMount() {
-    const contactFromLocalStorage = JSON.parse(localStorage.getItem("contactsData"));
-    console.log(contactFromLocalStorage)
-    if (contactFromLocalStorage) {
-      this.setState({contacts:contactFromLocalStorage })
+ componentDidMount() {
+    if (JSON.parse(localStorage.getItem("contacts"))) {
+      this.setState({ contacts: JSON.parse(localStorage.getItem("contacts")) });
     }
   }
-
-  componentDidUpdate(_, prevState) {
-    const { contacts } = prevState;
-    if (contacts.length !== 0 && contacts.length!== this.state.contacts.length) {
-      localStorage.setItem("contactsData", JSON.stringify(this.state.contacts))
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      if (JSON.parse(localStorage.getItem("contacts"))) {
+        localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+      } else {
+        localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+      }
     }
   }
   formHandler = (name,number) => {
